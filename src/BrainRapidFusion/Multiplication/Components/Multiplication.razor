@@ -3,17 +3,15 @@
 @inherits MultiplicationBase
 @page "/multiplication"
 
-
-
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
             <h3>@Question</h3>
         </div>
         <div class="col-lg-6">
-            @foreach (var answer in Answers)
+            @foreach (var answer in Question.ProposedAnswers)
             {
-                <AnswerButton Answer="@answer.Item1" IsCorrect="answer.Item2" OnClickCallback ="@AnswerSelected" />
+                <AnswerButton Answer="@answer" OnClickCallback ="@AnswerSelected" />
             }
         </div>
     </div>
