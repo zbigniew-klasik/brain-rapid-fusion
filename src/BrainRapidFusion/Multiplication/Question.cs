@@ -11,11 +11,11 @@ namespace BrainRapidFusion.Multiplication
 
         public int Multiplier { get; private set; }
 
-        public IEnumerable<int> ProposedAnswers { get; private set; }
+        public IList<int> ProposedAnswers { get; private set; }
 
         public int SelectedAnswer { get; private set; }
 
-        public Question(int multiplicand, int multiplier, IEnumerable<int> proposedAnswers)
+        public Question(int multiplicand, int multiplier, IList<int> proposedAnswers)
         {
             Multiplicand = multiplicand;
             Multiplier = multiplier;

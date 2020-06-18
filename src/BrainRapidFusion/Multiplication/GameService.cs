@@ -19,7 +19,7 @@ namespace BrainRapidFusion.Multiplication
             var multiplicand = random.Next(2, 11);
             var multiplier = random.Next(2, 11);
 
-            IEnumerable<int> proposedAnswers = GenerateAnswers(multiplicand, multiplier, 6);
+            var proposedAnswers = GenerateAnswers(multiplicand, multiplier, random.Next(3, 10));
 
             return new Question(multiplicand, multiplier, proposedAnswers);
         }
@@ -28,7 +28,7 @@ namespace BrainRapidFusion.Multiplication
         {
         }
 
-        private IEnumerable<int> GenerateAnswers(int multiplicand, int multiplier, int numberOfAnswers)
+        private IList<int> GenerateAnswers(int multiplicand, int multiplier, int numberOfAnswers)
         {
             var answers = new List<int>
             {
