@@ -4,6 +4,7 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     height: 100%;
     user-select: none;
+    background: linear-gradient(135deg, rgba(36,176,255,0.4) 10%, rgba(0,45,135,0.4) 90%);
 }
 
 #blazor-error-ui {
