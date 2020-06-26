@@ -1,31 +1,30 @@
-﻿.multiplication {
+﻿.multiplication::before {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(36,176,255,0.6) 10%, rgba(0,45,135,0.6) 90%);
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.multiplication {
     position: relative;
     height: 100%;
     background: url(../pictures/diagonal-noise.png) repeat #cfcfe6;
     font-family: 'Sriracha', cursive;
     color: white;
-}
 
-    .multiplication::before {
-        position: absolute;
-        background: linear-gradient(135deg, rgba(36,176,255,0.6) 10%, rgba(0,45,135,0.6) 90%);
-        content: '';
-        display: block;
-        height: 100%;
-        width: 100%;
-    }
-
-    .multiplication .pulpit {
+    .pulpit {
         position: absolute;
         margin: 0;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100vmin;
-        height: 100vmin;
-    }
+        width: 90vmin;
+        height: 90vmin;
+        border: 1px solid black;
 
-        .multiplication .pulpit .question {
+        .question {
             position: absolute;
             margin: 0;
             top: 50%;
@@ -34,21 +33,29 @@
             font-size: 12vmin;
         }
 
-        .multiplication .pulpit .proposed-answer {
+        .answer-wrapper {
             position: absolute;
             width: 18vmin;
             height: 18vmin;
-            border-radius: 50%;
-            cursor: pointer;
             transform: translate(-50%, -50%);
-            background-color: rgba(255,255,255,0.2);
-            box-shadow: inset 0px 0px 3vmin 0px rgba(255,255,255,0.6);
-        }
 
-            .multiplication .pulpit .proposed-answer span {
+            .answer-button {
+                position: absolute;
+                width: 18vmin;
+                height: 18vmin;
+                border-radius: 50%;
+                cursor: pointer;
+                background-color: rgba(255,255,255,0.2);
+                box-shadow: inset 0px 0px 3vmin 0px rgba(255,255,255,0.6);
+            }
+
+            .answer-button span {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 font-size: 8vmin;
             }
+        }
+    }
+}

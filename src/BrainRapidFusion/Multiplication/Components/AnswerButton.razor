@@ -1,7 +1,8 @@
 ﻿@inherits AnswerButtonBase
 
-<div class="proposed-answer"
-     style="top: @(PositionTop)%; left: @(PositionLeft)%"
-     @onclick="OnClicked">
-    <span>@Answer</span>
+<div class="answer-wrapper" style="top: @(PositionTop)%; left: @(PositionLeft)%">
+    <div class="answer-button"
+         @onclick="OnClicked">
+        <span>@Answer</span>
+    </div>
 </div>
