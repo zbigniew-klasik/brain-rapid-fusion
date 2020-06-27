@@ -11,52 +11,37 @@ namespace BrainRapidFusion.Multiplication.Components
         public int Index { get; set; }
 
         [Parameter]
-        public int Count { get; set; }
+        public Question Question { get; set; }
 
         [Parameter]
-        public int Answer { get; set; }
+        public Answer Answer { get; set; }
+
+        public CssClass ButtonCssClass { get; private set; } = new CssClass("answer-button");
+
+        public string ButtonPosition { get; private set; }
 
         [Parameter]
-        public bool IsCorrect { get; set; }
-
-        [Parameter]
-        public bool IsRevealed { get; set; }
-
-        public CssClass ButtonCssClass { get; set; } = new CssClass("answer-button");
-
-        [Parameter]
-        public EventCallback<int> OnClickCallback { get; set; }
-
-        protected double PositionTop { get; private set; }
-
-        protected double PositionLeft { get; private set; }
-
-        private bool IsClicked { get; set; }
+        public EventCallback<Answer> OnClickCallback { get; set; }
 
         protected override void OnParametersSet()
         {
             SetAnswerPosition();
 
-            if (IsRevealed && (IsClicked || IsCorrect))
-            {
-                if (IsCorrect) ButtonCssClass.Add("correct");
-                else ButtonCssClass.Add("wrong");
-            }
-            else
-            {
-                ButtonCssClass.Remove("correct");
-                ButtonCssClass.Remove("wront");
-            }
+            if (Question.IsAnswerSelected && Answer.IsCorrect)
+                Reveal();
 
             base.OnParametersSet();
         }
 
         public Task OnClicked()
         {
-            if (IsClicked)
+            if (Question.IsAnswerSelected)
                 return Task.CompletedTask;
 
-            IsClicked = true;
+            Reveal();
+
+            Question.SelectAnswer(Answer);
+
             return OnClickCallback.InvokeAsync(Answer);
         }
 
@@ -64,10 +49,18 @@ namespace BrainRapidFusion.Multiplication.Components
         {
             var center = 50d;
             var radius = 35d;
-            var angle = Math.PI * 2 * Index / Count + Math.PI / 2;
+            var angle = Math.PI * 2 * Index / Question.ProposedAnswers.Count + Math.PI / 2;
+            var top = (int)Math.Round(center + radius * Math.Sin(angle));
+            var left = (int)Math.Round(center + radius * Math.Cos(angle));
+            ButtonPosition = $"top: {top}%; left: {left}%";
+        }
 
-            PositionTop = Math.Round(center + radius * Math.Sin(angle));
-            PositionLeft = Math.Round(center + radius * Math.Cos(angle));
+        private void Reveal()
+        {
+            if (Answer.IsCorrect)
+                ButtonCssClass.Add("correct");
+            else
+                ButtonCssClass.Add("wrong");
         }
     }
 }

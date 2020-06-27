@@ -1,38 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BrainRapidFusion.Multiplication
 {
     public class Question
     {
-        public int Multiplicand { get; private set; }
-
-        public int Multiplier { get; private set; }
-
-        public IList<int> ProposedAnswers { get; private set; }
-
-        public int SelectedAnswer { get; private set; }
-
-        public Question(int multiplicand, int multiplier, IList<int> proposedAnswers)
+        public Question(int multiplicand, int multiplier, IList<Answer> proposedAnswers)
         {
             Multiplicand = multiplicand;
             Multiplier = multiplier;
             ProposedAnswers = proposedAnswers;
         }
 
-        public void SelectAnswer(int answer)
+        public int Multiplicand { get; }
+
+        public int Multiplier { get; }
+
+        public IList<Answer> ProposedAnswers { get; }
+
+        public Answer SelectedAnswer { get; private set; }
+
+        public bool IsAnswerSelected { get; private set; }
+
+        public void SelectAnswer(Answer answer)
         {
+            if (IsAnswerSelected)
+                throw new InvalidOperationException("Answer already selected.");
+
             if (!ProposedAnswers.Contains(answer))
                 throw new ArgumentException("Unknown answer.");
 
             SelectedAnswer = answer;
-        }
-
-        public bool IsCorrect(int answer)
-        {
-            return (Multiplicand * Multiplier) == answer;
+            IsAnswerSelected = true;
         }
 
         public override string ToString() => $"{Multiplicand} × {Multiplier}";

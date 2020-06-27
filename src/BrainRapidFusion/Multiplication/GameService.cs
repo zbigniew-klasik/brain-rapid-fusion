@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BrainRapidFusion.Multiplication
 {
@@ -11,14 +10,12 @@ namespace BrainRapidFusion.Multiplication
 
         public GameService()
         {
-
         }
 
         public Question GetNextQuestion()
         {
             var multiplicand = random.Next(2, 11);
             var multiplier = random.Next(2, 11);
-
             var proposedAnswers = GenerateAnswers(multiplicand, multiplier, random.Next(3, 10));
 
             return new Question(multiplicand, multiplier, proposedAnswers);
@@ -28,9 +25,11 @@ namespace BrainRapidFusion.Multiplication
         {
         }
 
-        private IList<int> GenerateAnswers(int multiplicand, int multiplier, int numberOfAnswers)
+        private IList<Answer> GenerateAnswers(int multiplicand, int multiplier, int numberOfAnswers)
         {
-            var answers = new List<int>
+            var correctAnswer = multiplicand * multiplier;
+
+            var wrongAnswers = new List<int>
             {
                 multiplicand * (multiplier + 1),
                 multiplicand * (multiplier - 1),
@@ -58,18 +57,19 @@ namespace BrainRapidFusion.Multiplication
                 (multiplicand - 1) * multiplier - 2,
             };
 
-            answers = answers
-                .Where(x => x != multiplicand * multiplier)
+            wrongAnswers = wrongAnswers
+                .Where(x => x != correctAnswer)
                 .Where(x => x > 3)
                 .Distinct()
                 .OrderBy(x => random.Next())
                 .Take(numberOfAnswers - 1)
                 .ToList();
 
-            answers.Add(multiplicand * multiplier);
+            wrongAnswers.Add(correctAnswer);
 
-            return answers
+            return wrongAnswers
                 .OrderBy(x => random.Next())
+                .Select(x => new Answer(x, x == correctAnswer))
                 .ToList();
         }
     }
