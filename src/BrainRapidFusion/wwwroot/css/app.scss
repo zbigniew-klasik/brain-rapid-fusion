@@ -31,3 +31,11 @@ html, body {
 
 @media (min-width: 768px) {
 }
+
+@font-face {
+    font-family: 'Sriracha';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Sriracha'), local('Sriracha-Regular'), url(../fonts/Sriracha-Regular.ttf) format('woff2');
+}
