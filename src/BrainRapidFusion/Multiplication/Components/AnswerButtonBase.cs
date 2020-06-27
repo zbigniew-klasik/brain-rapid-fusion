@@ -16,12 +16,17 @@ namespace BrainRapidFusion.Multiplication.Components
         [Parameter]
         public Answer Answer { get; set; }
 
+        [Parameter]
+        public bool IsMuted { get; set; }
+
+        [Parameter]
+        public EventCallback<Answer> OnClickCallback { get; set; }
+
         public CssClass ButtonCssClass { get; private set; } = new CssClass("answer-button");
 
         public string ButtonPosition { get; private set; }
 
-        [Parameter]
-        public EventCallback<Answer> OnClickCallback { get; set; }
+        public bool IsClicked { get; private set; }
 
         protected override void OnParametersSet()
         {
@@ -37,6 +42,8 @@ namespace BrainRapidFusion.Multiplication.Components
         {
             if (Question.IsAnswerSelected)
                 return Task.CompletedTask;
+
+            IsClicked = true;
 
             Reveal();
 

@@ -5,4 +5,14 @@
          @onclick="OnClicked">
         <span>@Answer</span>
     </div>
+
+    @if(!IsMuted && IsClicked && Answer.IsCorrect)
+    {
+        <audio src="sounds/bip.mp3" autoplay></audio>
+    }
+
+    @if(!IsMuted && IsClicked && !Answer.IsCorrect)
+    {
+        <audio src="sounds/blip.mp3" autoplay></audio>
+    }
 </div>
