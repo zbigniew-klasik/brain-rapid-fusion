@@ -30,6 +30,11 @@ namespace BrainRapidFusion.Multiplication
             SelectedAnswer = answer;
         }
 
+        public bool IsCorrect(int answer)
+        {
+            return (Multiplicand * Multiplier) == answer;
+        }
+
         public override string ToString() => $"{Multiplicand} × {Multiplier}";
     }
 }

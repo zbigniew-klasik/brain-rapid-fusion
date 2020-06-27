@@ -59,6 +59,9 @@ namespace BrainRapidFusion.Multiplication
             };
 
             answers = answers
+                .Where(x => x != multiplicand * multiplier)
+                .Where(x => x > 3)
+                .Distinct()
                 .OrderBy(x => random.Next())
                 .Take(numberOfAnswers - 1)
                 .ToList();

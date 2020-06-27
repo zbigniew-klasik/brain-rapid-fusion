@@ -1,7 +1,7 @@
 ﻿@inherits AnswerButtonBase
 
 <div class="answer-wrapper" style="top: @(PositionTop)%; left: @(PositionLeft)%">
-    <div class="answer-button"
+    <div class="@ButtonCssClass"
          @onclick="OnClicked">
         <span>@Answer</span>
     </div>

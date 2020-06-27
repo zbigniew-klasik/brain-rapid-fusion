@@ -1,4 +1,9 @@
-﻿.multiplication::before {
+﻿$neutral-answer-button-color: rgba(255,255,255,0.2);
+$correct-answer-button-color: rgba(50,200,50,0.5);
+$wrong-answer-button-color: rgba(255,50,50,0.5);
+$answer-button-flip-time: 200ms;
+
+.multiplication::before {
     position: absolute;
     background: linear-gradient(135deg, rgba(36,176,255,0.6) 10%, rgba(0,45,135,0.6) 90%);
     content: '';
@@ -20,9 +25,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 90vmin;
-        height: 90vmin;
-        border: 1px solid black;
+        width: 98vmin;
+        height: 98vmin;
 
         .question {
             position: absolute;
@@ -45,17 +49,91 @@
                 height: 18vmin;
                 border-radius: 50%;
                 cursor: pointer;
-                background-color: rgba(255,255,255,0.2);
+                background-color: $neutral-answer-button-color;
                 box-shadow: inset 0px 0px 3vmin 0px rgba(255,255,255,0.6);
+
+                span {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 8vmin;
+                }
             }
 
-            .answer-button span {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 8vmin;
+            .correct {
+                background-color: $neutral-answer-button-color;
+                animation: multiplication-button-flip $answer-button-flip-time ease both, multiplication-button-turn-correct 1ms $answer-button-flip-time / 2 ease both;
+            }
+
+            .wrong {
+                background-color: $neutral-answer-button-color;
+                animation: multiplication-button-flip $answer-button-flip-time ease both, multiplication-button-turn-wrong 1ms $answer-button-flip-time / 2 ease both;
             }
         }
+    }
+
+    .show {
+        opacity: 0.0;
+        animation: multiplication-pulpit-show 300ms ease both;
+    }
+
+    .hide {
+        opacity: 0.0;
+        animation: multiplication-pulpit-hide 300ms ease both;
+    }
+}
+
+@keyframes multiplication-button-turn-correct {
+    0% {
+        background-color: $neutral-answer-button-color;
+    }
+
+    100% {
+        background-color: $correct-answer-button-color;
+    }
+}
+
+@keyframes multiplication-button-turn-wrong {
+    0% {
+        background-color: $neutral-answer-button-color;
+    }
+
+    100% {
+        background-color: $wrong-answer-button-color;
+    }
+}
+
+@keyframes multiplication-button-flip {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    50% {
+        transform: rotateX(90deg);
+    }
+
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+@keyframes multiplication-pulpit-show {
+    0% {
+        opacity: 0.0;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
+}
+
+@keyframes multiplication-pulpit-hide {
+    0% {
+        opacity: 1.0;
+    }
+
+    100% {
+        opacity: 0.0;
     }
 }

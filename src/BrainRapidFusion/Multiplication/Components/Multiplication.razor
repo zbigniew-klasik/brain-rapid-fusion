@@ -4,14 +4,16 @@
 @page "/"
 
 <div class="multiplication">
-    <div class="pulpit">
+    <div class="@PulpitCssClass">
         <h3 class="question">@Question</h3>
 
-        @for (var i = 0; i < Question.ProposedAnswers.Count(); i++)
+        @for (var i = 0; i < Question?.ProposedAnswers?.Count(); i++)
         {
             <AnswerButton Index="@i"
                           Count="@Question.ProposedAnswers.Count()"
                           Answer="@Question.ProposedAnswers[@i]"
+                          IsCorrect="@Question.IsCorrect(Question.ProposedAnswers[@i])"
+                          IsRevealed="@IsRevealed"
                           OnClickCallback="@AnswerSelected" />
         }
 
