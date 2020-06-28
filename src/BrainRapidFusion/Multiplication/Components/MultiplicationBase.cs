@@ -6,6 +6,8 @@ namespace BrainRapidFusion.Multiplication.Components
 {
     public class MultiplicationBase : ComponentBase
     {
+        private const int animationDuration = 300;
+
         [Inject]
         public IGameService GameService { get; set; }
 
@@ -21,12 +23,14 @@ namespace BrainRapidFusion.Multiplication.Components
 
         public void AnswerSelected(Answer answer)
         {
-            var waitTime = answer.IsCorrect ? 200 : 2000;
+            var delay = answer.IsCorrect
+                ? animationDuration
+                : 3 * animationDuration;
 
             GameService.ProcessAnsweredQuestion(Question);
             this.StateHasChanged();
 
-            _ = Task.Delay(waitTime)
+            _ = Task.Delay(delay)
                 .ContinueWith(t => HideOldQuestion())
                 .Unwrap()
                 .ContinueWith(t => ShowNewQuestion())
@@ -38,7 +42,7 @@ namespace BrainRapidFusion.Multiplication.Components
             Question = GameService.GetNextQuestion();
             PulpitCssClass.Add("show");
             this.StateHasChanged();
-            await Task.Delay(300);
+            await Task.Delay(animationDuration);
             PulpitCssClass.Remove("show");
             this.StateHasChanged();
         }
@@ -47,7 +51,7 @@ namespace BrainRapidFusion.Multiplication.Components
         {
             PulpitCssClass.Add("hide");
             this.StateHasChanged();
-            await Task.Delay(300);
+            await Task.Delay(animationDuration);
             Question = null;
             PulpitCssClass.Remove("hide");
             this.StateHasChanged();

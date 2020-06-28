@@ -1,7 +1,7 @@
 ﻿$neutral-answer-button-color: rgba(255,255,255,0.2);
 $correct-answer-button-color: rgba(50,200,50,0.5);
 $wrong-answer-button-color: rgba(255,50,50,0.5);
-$answer-button-flip-time: 200ms;
+$animation-duration: 300ms;
 
 .multiplication::before {
     position: absolute;
@@ -63,24 +63,24 @@ $answer-button-flip-time: 200ms;
 
             .correct {
                 background-color: $neutral-answer-button-color;
-                animation: multiplication-button-flip $answer-button-flip-time ease both, multiplication-button-turn-correct 1ms $answer-button-flip-time / 2 ease both;
+                animation: multiplication-button-flip $animation-duration ease both, multiplication-button-turn-correct 1ms $animation-duration / 2 ease both;
             }
 
             .wrong {
                 background-color: $neutral-answer-button-color;
-                animation: multiplication-button-flip $answer-button-flip-time ease both, multiplication-button-turn-wrong 1ms $answer-button-flip-time / 2 ease both;
+                animation: multiplication-button-flip $animation-duration ease both, multiplication-button-turn-wrong 1ms $animation-duration / 2 ease both;
             }
         }
     }
 
     .show {
         opacity: 0.0;
-        animation: multiplication-pulpit-show 300ms ease both;
+        animation: multiplication-pulpit-show $animation-duration ease both;
     }
 
     .hide {
         opacity: 0.0;
-        animation: multiplication-pulpit-hide 300ms ease both;
+        animation: multiplication-pulpit-hide $animation-duration ease both;
     }
 }
 
