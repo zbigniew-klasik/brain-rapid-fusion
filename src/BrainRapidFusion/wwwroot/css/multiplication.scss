@@ -63,12 +63,12 @@ $animation-duration: 300ms;
 
             .correct {
                 background-color: $neutral-answer-button-color;
-                animation: multiplication-button-flip $animation-duration ease both, multiplication-button-turn-correct 1ms $animation-duration / 2 ease both;
+                animation: multiplication-button-flip $animation-duration 100ms ease both, multiplication-button-turn-correct 1ms $animation-duration / 2 ease both;
             }
 
             .wrong {
                 background-color: $neutral-answer-button-color;
-                animation: multiplication-button-flip $animation-duration ease both, multiplication-button-turn-wrong 1ms $animation-duration / 2 ease both;
+                animation: multiplication-button-flip $animation-duration 100ms ease both, multiplication-button-turn-wrong 1ms $animation-duration / 2 ease both;
             }
         }
     }

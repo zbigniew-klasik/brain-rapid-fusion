@@ -1,6 +1,6 @@
 {
-  "name": "BrainRapidFusion",
-  "short_name": "BrainRapidFusion",
+  "name": "Brain Rapid Fusion",
+  "short_name": "BRF",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

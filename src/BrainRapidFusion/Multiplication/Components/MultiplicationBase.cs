@@ -25,7 +25,7 @@ namespace BrainRapidFusion.Multiplication.Components
         {
             var delay = answer.IsCorrect
                 ? animationDuration
-                : 3 * animationDuration;
+                : 5 * animationDuration;
 
             GameService.ProcessAnsweredQuestion(Question);
             this.StateHasChanged();
