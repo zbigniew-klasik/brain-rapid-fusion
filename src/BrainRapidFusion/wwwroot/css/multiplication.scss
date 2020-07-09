@@ -39,14 +39,14 @@ $animation-duration: 300ms;
 
         .answer-wrapper {
             position: absolute;
-            width: 18vmin;
-            height: 18vmin;
+            width: 24vmin;
+            height: 24vmin;
             transform: translate(-50%, -50%);
 
             .answer-button {
                 position: absolute;
-                width: 18vmin;
-                height: 18vmin;
+                width: 24vmin;
+                height: 24vmin;
                 border-radius: 50%;
                 cursor: pointer;
                 background-color: $neutral-answer-button-color;
@@ -57,7 +57,7 @@ $animation-duration: 300ms;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    font-size: 8vmin;
+                    font-size: 10vmin;
                 }
             }
 
