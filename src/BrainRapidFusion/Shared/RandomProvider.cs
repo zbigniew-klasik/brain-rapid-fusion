@@ -6,7 +6,7 @@ namespace BrainRapidFusion.Shared
     {
         private readonly Random random = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
 
-        public int Next(int minValue, int maxValue) => random.Next(minValue, minValue);
+        public int Next(int minValue, int maxValue) => random.Next(minValue, maxValue);
 
         public double NextDouble() => random.NextDouble();
 

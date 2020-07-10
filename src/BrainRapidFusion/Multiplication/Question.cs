@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrainRapidFusion.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,8 +7,6 @@ namespace BrainRapidFusion.Multiplication
 {
     public class Question
     {
-        private static Random random = new Random((int)DateTime.Now.Ticks & 0x0000FFFF); // todo: refacotr as a service?
-
         private Question(int multiplicand, int multiplier, IList<Answer> proposedAnswers)
         {
             Multiplicand = multiplicand;
@@ -25,10 +24,13 @@ namespace BrainRapidFusion.Multiplication
 
         public bool IsAnswerSelected { get; private set; }
 
-        public static Question CreateFromAdoption(Adoption adoption)
+        public static Question CreateFromAdoption(Adoption adoption, IRandomProvider randomProvider)
         {
-            var proposedAnswers = GenerateAnswers(adoption.Multiplicand, adoption.Multiplier, adoption.Value);
-            return new Question(adoption.Multiplicand, adoption.Multiplier, proposedAnswers); // todo: randomize order of multiplicand and multiplier
+            var parameters = (new List<int>() { adoption.Multiplicand, adoption.Multiplier }).Shuffle(randomProvider);
+            var multiplicand = parameters.First();
+            var multiplier = parameters.Last();
+            var proposedAnswers = GenerateAnswers(adoption.Multiplicand, adoption.Multiplier, adoption.Value + 3, randomProvider);
+            return new Question(multiplicand, multiplier, proposedAnswers);
         }
 
         public void SelectAnswer(Answer answer)
@@ -45,11 +47,10 @@ namespace BrainRapidFusion.Multiplication
 
         public override string ToString() => $"{Multiplicand} × {Multiplier}";
 
-        private static IList<Answer> GenerateAnswers(int multiplicand, int multiplier, decimal adoption)
+        private static IList<Answer> GenerateAnswers(int multiplicand, int multiplier, int numberOfAnswers, IRandomProvider randomProvider)
         {
-            adoption = adoption < 0 ? 0 : adoption;
-
-            int numberOfAnswers = (int)Decimal.Ceiling(3 + adoption * 5);
+            numberOfAnswers = (numberOfAnswers < 3) ? 3 : numberOfAnswers;
+            numberOfAnswers = (numberOfAnswers > 8) ? 8 : numberOfAnswers;
 
             var correctAnswer = multiplicand * multiplier;
 
@@ -85,14 +86,14 @@ namespace BrainRapidFusion.Multiplication
                 .Where(x => x != correctAnswer)
                 .Where(x => x > 3)
                 .Distinct()
-                .OrderBy(x => random.Next())
+                .Shuffle(randomProvider)
                 .Take(numberOfAnswers - 1)
                 .ToList();
 
             wrongAnswers.Add(correctAnswer);
 
             return wrongAnswers
-                .OrderBy(x => random.Next())
+                .Shuffle(randomProvider)
                 .Select(x => new Answer(x, x == correctAnswer))
                 .ToList();
         }
