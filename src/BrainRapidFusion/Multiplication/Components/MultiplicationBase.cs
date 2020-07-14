@@ -9,14 +9,20 @@ namespace BrainRapidFusion.Multiplication.Components
         private const int animationDuration = 300;
 
         [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
         public IGameService GameService { get; set; }
 
         public Question Question { get; private set; }
+
+        public int Score { get; private set; }
 
         public CssClass PulpitCssClass { get; set; } = new CssClass("pulpit");
 
         protected override void OnParametersSet()
         {
+            GameService.StartGame();
             Question = GameService.GetNextQuestion();
             base.OnParametersSet();
         }
@@ -27,7 +33,8 @@ namespace BrainRapidFusion.Multiplication.Components
                 ? animationDuration
                 : 5 * animationDuration;
 
-            GameService.ProcessAnsweredQuestion(Question);
+            Score += GameService.ProcessAnsweredQuestion(Question);
+
             this.StateHasChanged();
 
             _ = Task.Delay(delay)
@@ -55,6 +62,13 @@ namespace BrainRapidFusion.Multiplication.Components
             Question = null;
             PulpitCssClass.Remove("hide");
             this.StateHasChanged();
+        }
+
+        public async Task FinishGame()
+        {
+            GameService.FinishGame();
+            NavigationManager.NavigateTo("/multiplication/finish");
+            await Task.CompletedTask;
         }
     }
 }

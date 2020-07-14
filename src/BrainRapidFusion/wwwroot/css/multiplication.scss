@@ -19,6 +19,27 @@ $animation-duration: 300ms;
     font-family: 'Sriracha', cursive;
     color: white;
 
+    .page {
+        position: relative;
+        text-align: center;
+
+        h1 {
+            padding: 14vmin 0;
+            font-size: 10vmin;
+        }
+
+        .btn {
+            position: relative;
+            border-radius: 10vmin;
+            cursor: pointer;
+            background-color: $neutral-answer-button-color;
+            box-shadow: inset 0px 0px 3vmin 0px rgba(255,255,255,0.6);
+            font-size: 6vmin;
+            color: white;
+            padding: 2vmin 6vmin;
+        }
+    }
+
     .pulpit {
         position: absolute;
         margin: 0;

@@ -2,7 +2,10 @@
 {
     public interface IGameService
     {
-        public Question GetNextQuestion();
-        public void ProcessAnsweredQuestion(Question question);
+        void StartGame();
+        void CancelGame();
+        void FinishGame();
+        Question GetNextQuestion();
+        int ProcessAnsweredQuestion(Question question);
     }
 }

@@ -1,9 +1,14 @@
 ﻿@inherits MultiplicationBase
-@page "/multiplication"
-@page "/"
+@page "/multiplication/game"
 
 <div class="multiplication">
     <div class="@PulpitCssClass">
+
+        <Timer TimeoutInSeconds="180"
+               OnTimeout="@FinishGame" />
+
+        <span>SCORE @Score</span>
+
         <span class="question">@Question</span>
 
         @for (var i = 0; i < Question?.ProposedAnswers?.Count(); i++)

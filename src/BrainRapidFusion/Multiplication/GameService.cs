@@ -16,19 +16,30 @@ namespace BrainRapidFusion.Multiplication
         {
             this.randomProvider = randomProvider;
             this.timeProvider = timeProvider;
+        }
+
+        public void StartGame()
+        {
             RefillAddoptions();
+        }
+
+        public void CancelGame()
+        {
+
+        }
+
+        public void FinishGame()
+        {
+
         }
 
         public Question GetNextQuestion()
         {
             RefillAddoptions();
 
-            if (usedAdoptions.Count >= 10)
-                usedAdoptions.Remove(usedAdoptions.First());
-
             Question question = null;
 
-            if (randomProvider.NextDouble() > 0.5)
+            if (randomProvider.NextDouble() > 0.3)
             {
                 question = GetAdoptedQuestion();
             }
@@ -103,7 +114,7 @@ namespace BrainRapidFusion.Multiplication
                 {
                     multiplicand++;
                     multiplier = 2;
-                } 
+                }
                 else
                 {
                     multiplier++;
@@ -113,14 +124,18 @@ namespace BrainRapidFusion.Multiplication
             }
         }
 
-        public void ProcessAnsweredQuestion(Question question)
+        public int ProcessAnsweredQuestion(Question question)
         {
             var adoption = state.Adoptions.GetForQuestion(question);
 
             if (question.SelectedAnswer.IsCorrect)
+            {
                 adoption.Increase(timeProvider);
-            else
-                adoption.Clear(timeProvider);
+                return adoption.Multiplicand * adoption.Multiplier * adoption.Value;
+            }
+
+            adoption.Clear(timeProvider);
+            return 0;
         }
     }
 }
