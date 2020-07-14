@@ -40,6 +40,26 @@ $animation-duration: 300ms;
         }
     }
 
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: right;
+        font-size: 4vmin;
+        padding: 4vmin;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: right;
+        font-size: 4vmin;
+        padding: 4vmin;
+    }
+
     .pulpit {
         position: absolute;
         margin: 0;

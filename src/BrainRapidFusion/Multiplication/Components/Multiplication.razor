@@ -2,12 +2,11 @@
 @page "/multiplication/game"
 
 <div class="multiplication">
-    <div class="@PulpitCssClass">
-
+    <div class="header">
         <Timer TimeoutInSeconds="180"
                OnTimeout="@FinishGame" />
-
-        <span>SCORE @Score</span>
+    </div>
+    <div class="@PulpitCssClass">
 
         <span class="question">@Question</span>
 
@@ -19,5 +18,8 @@
                           OnClickCallback="@AnswerSelected" />
         }
 
+    </div>
+    <div class="footer">
+        <span class="float-right"><span class="oi oi-star"></span> @Score</span>
     </div>
 </div>
