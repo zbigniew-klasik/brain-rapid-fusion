@@ -20,17 +20,16 @@ namespace BrainRapidFusion.Multiplication
 
         public void StartGame()
         {
+            usedAdoptions.Clear();
             RefillAddoptions();
         }
 
         public void CancelGame()
         {
-
         }
 
         public void FinishGame()
         {
-
         }
 
         public Question GetNextQuestion()
@@ -103,7 +102,7 @@ namespace BrainRapidFusion.Multiplication
             if (!state.Adoptions.Any())
                 state.Adoptions.Add(new Adoption(2, 2, timeProvider));
 
-            while (state.Adoptions.Count(x => x.Value <= 0) < 10)
+            while (state.Adoptions.Count(x => x.Value <= 0) < 6)
             {
                 var multiplicand = state.Adoptions.Max(x => x.Multiplicand);
                 var multiplicandCopy = multiplicand;
@@ -120,8 +119,17 @@ namespace BrainRapidFusion.Multiplication
                     multiplier++;
                 }
 
+                if (multiplicand >= 10 && !IsBasicMultiplicationTableAdopted())
+                    break;
+
                 state.Adoptions.Add(new Adoption(multiplicand, multiplier, timeProvider));
             }
+        }
+
+        private bool IsBasicMultiplicationTableAdopted()
+        {
+            return state.Adoptions.Any(x => x.Multiplicand == 10 && x.Multiplier == 10)
+                && state.Adoptions.Where(x => x.Multiplicand <= 10 && x.Multiplier <= 10).All(x => x.Value > 0);
         }
 
         public int ProcessAnsweredQuestion(Question question)

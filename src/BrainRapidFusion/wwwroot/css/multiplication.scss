@@ -44,18 +44,16 @@ $animation-duration: 300ms;
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        text-align: right;
-        font-size: 4vmin;
-        padding: 4vmin;
     }
 
     .footer {
         position: fixed;
         bottom: 0;
         left: 0;
+    }
+
+    .control-bar {
         width: 100%;
-        text-align: right;
         font-size: 4vmin;
         padding: 4vmin;
     }
@@ -68,6 +66,7 @@ $animation-duration: 300ms;
         transform: translate(-50%, -50%);
         width: 98vmin;
         height: 98vmin;
+        z-index: 1;
 
         .question {
             position: absolute;
