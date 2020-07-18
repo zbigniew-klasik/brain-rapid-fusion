@@ -6,8 +6,8 @@
     <div class="header control-bar">
         <BackButton />
         <div class="float-right">
-            <span class="control-text">score @Score</span>
-            <span class="control-text">time <Timer TimeoutInSeconds="180" OnTimeout="@FinishGame" /></span>
+            <Score Value="@Score" />
+            <Timer TimeoutInSeconds="180" OnTimeout="@FinishGame" />
         </div>
     </div>
 
