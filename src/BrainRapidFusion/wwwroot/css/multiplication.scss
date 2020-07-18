@@ -54,20 +54,20 @@ $animation-duration: 300ms;
 
     .control-bar {
         width: 100%;
-        padding: 3vmin;
+        padding: 4vmin;
 
         .icon-button {
-            font-size: 4vmin;
+            font-size: 8vmin;
             cursor: pointer;
             line-height: 0;
         }
 
         .control-text {
             font-family: 'Major Mono Display', monospace;
-            font-size: 2vmin;
-            box-shadow: inset 0px 0px 3vmin 0px rgba(255,255,255,0.6);
-            padding: 1vmin;
-            margin-left: 1vmin;
+            font-size: 4vmin;
+            background-color: rgba(255,255,255,0.3);
+            padding: 2vmin;
+            margin-left: 2vmin;
         }
     }
 
