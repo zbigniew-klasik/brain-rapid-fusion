@@ -19,14 +19,16 @@
             <AnswerButton Index="@i"
                           Question="@Question"
                           Answer="@Question.ProposedAnswers[@i]"
-                          OnClickCallback="@AnswerSelected" />
+                          OnClickCallback="@AnswerSelected"
+                          IsMuted="@IsMuted"/>
         }
 
     </div>
 
     <div class="footer control-bar">
         <div class="float-right">
-            <VolumeButton />
+            <VolumeButton IsMuted="@IsMuted"
+                          OnVolumeChanged="@SetVolume"/>
         </div>
     </div>
 

@@ -18,6 +18,8 @@ namespace BrainRapidFusion.Multiplication.Components
 
         public int Score { get; private set; }
 
+        public bool IsMuted { get; private set; }
+
         public CssClass PulpitCssClass { get; set; } = new CssClass("pulpit");
 
         protected override void OnParametersSet()
@@ -26,6 +28,8 @@ namespace BrainRapidFusion.Multiplication.Components
             Question = GameService.GetNextQuestion();
             base.OnParametersSet();
         }
+
+        public void SetVolume(bool isMuted) => IsMuted = isMuted;
 
         public void AnswerSelected(Answer answer)
         {
