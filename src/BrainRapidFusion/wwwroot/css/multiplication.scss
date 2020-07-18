@@ -54,10 +54,12 @@ $animation-duration: 300ms;
 
     .control-bar {
         width: 100%;
-        padding: 2vmin;
+        padding: 3vmin;
 
         .icon-button {
             font-size: 4vmin;
+            cursor: pointer;
+            line-height: 0;
         }
 
         .control-text {
