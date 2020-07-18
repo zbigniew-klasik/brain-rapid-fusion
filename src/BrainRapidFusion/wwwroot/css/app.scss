@@ -40,6 +40,14 @@ html, body {
     src: local('Sriracha'), local('Sriracha-Regular'), url(../fonts/Sriracha-Regular.ttf) format('woff2');
 }
 
+@font-face {
+    font-family: 'Major Mono Display';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Major Mono Display Regular'), local('MajorMonoDisplay-Regular'), url(../fonts/MajorMonoDisplay-Regular.ttf) format('woff2');
+}
+
 .dot-spinner {
     position: absolute;
     margin: 0;

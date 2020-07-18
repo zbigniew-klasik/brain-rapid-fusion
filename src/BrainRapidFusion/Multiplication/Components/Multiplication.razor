@@ -2,17 +2,16 @@
 @page "/multiplication/game"
 
 <div class="multiplication">
-    <div class="header control-bar">
-        <span>
-            back
-        </span>
-        <span class="float-right">
-            <Timer TimeoutInSeconds="180"
-                   OnTimeout="@FinishGame" />
-        </span>
-    </div>
-    <div class="@PulpitCssClass">
 
+    <div class="header control-bar">
+        <BackButton />
+        <div class="float-right">
+            <span class="control-text">score @Score</span>
+            <span class="control-text">time <Timer TimeoutInSeconds="180" OnTimeout="@FinishGame" /></span>
+        </div>
+    </div>
+
+    <div class="@PulpitCssClass">
         <span class="question">@Question</span>
 
         @for (var i = 0; i < Question?.ProposedAnswers?.Count(); i++)
@@ -24,8 +23,11 @@
         }
 
     </div>
+
     <div class="footer control-bar">
-        <span><span class="oi oi-star"></span> @Score</span>
-        <span class="float-right">sound</span>
+        <div class="float-right">
+            <VolumeButton />
+        </div>
     </div>
+
 </div>
