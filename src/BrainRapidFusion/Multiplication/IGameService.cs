@@ -1,10 +1,12 @@
-﻿namespace BrainRapidFusion.Multiplication
+﻿using System.Threading.Tasks;
+
+namespace BrainRapidFusion.Multiplication
 {
     public interface IGameService
     {
-        void StartGame();
-        void CancelGame();
-        void FinishGame();
+        Task StartGame();
+        Task CancelGame();
+        Task FinishGame();
         Question GetNextQuestion();
         int ProcessAnsweredQuestion(Question question);
     }

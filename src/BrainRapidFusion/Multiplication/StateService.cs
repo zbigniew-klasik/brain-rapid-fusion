@@ -1,27 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Blazored.LocalStorage;
+using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 
 namespace BrainRapidFusion.Multiplication
 {
-    public class StateService
+    public class StateService : IStateService
     {
+        private static readonly string multiplicationStateKey = "MultiplicationState";
+        private readonly ILocalStorageService localStorageService;
 
-        public State Get()
+        public StateService(ILocalStorageService localStorageService)
         {
-            // get state from browser cache
-            return new State();
+            this.localStorageService = localStorageService;
         }
 
-        public void Set(State state)
+        public async Task<State> Get()
         {
-            // save state to browser cache
+            var json = await localStorageService.GetItemAsStringAsync(multiplicationStateKey);
+            
+            if (string.IsNullOrEmpty(json))
+                return new State();
+
+            return JsonConvert.DeserializeObject<State>(json);
         }
 
-        public void Sync()
+        public async Task Set(State state)
+        {
+            var json = JsonConvert.SerializeObject(state);
+            await localStorageService.SetItemAsync(multiplicationStateKey, json);
+        }
+
+        public async Task Sync()
         {
             // sync browser cache with server
+            throw new NotImplementedException();
         }
     }
 }

@@ -22,9 +22,9 @@ namespace BrainRapidFusion.Multiplication.Components
 
         public CssClass PulpitCssClass { get; set; } = new CssClass("pulpit");
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
-            GameService.StartGame();
+            await GameService.StartGame();
             Question = GameService.GetNextQuestion();
             base.OnParametersSet();
         }
@@ -70,9 +70,8 @@ namespace BrainRapidFusion.Multiplication.Components
 
         public async Task FinishGame()
         {
-            GameService.FinishGame();
+            await GameService.FinishGame();
             NavigationManager.NavigateTo("/multiplication/finish");
-            await Task.CompletedTask;
         }
     }
 }

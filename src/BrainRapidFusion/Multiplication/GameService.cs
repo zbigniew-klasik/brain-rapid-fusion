@@ -2,34 +2,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BrainRapidFusion.Multiplication
 {
     public class GameService : IGameService
     {
-        private static State state = new State();
-        private static List<Adoption> usedAdoptions = new List<Adoption>();
         private readonly IRandomProvider randomProvider;
         private readonly ITimeProvider timeProvider;
+        private readonly IStateService stateService;
 
-        public GameService(IRandomProvider randomProvider, ITimeProvider timeProvider)
+        private State state = new State();
+        private List<Adoption> usedAdoptions = new List<Adoption>();
+
+        public GameService(IRandomProvider randomProvider, ITimeProvider timeProvider, IStateService stateService)
         {
             this.randomProvider = randomProvider;
             this.timeProvider = timeProvider;
+            this.stateService = stateService;
         }
 
-        public void StartGame()
+        public async Task StartGame()
         {
+            state = await stateService.Get();
+
             usedAdoptions.Clear();
             RefillAddoptions();
         }
 
-        public void CancelGame()
+        public async Task CancelGame()
         {
+            await stateService.Set(state);
         }
 
-        public void FinishGame()
+        public async Task FinishGame()
         {
+            await stateService.Set(state);
         }
 
         public Question GetNextQuestion()
@@ -100,7 +108,7 @@ namespace BrainRapidFusion.Multiplication
         private void RefillAddoptions()
         {
             if (!state.Adoptions.Any())
-                state.Adoptions.Add(new Adoption(2, 2, timeProvider));
+                state.Adoptions.Add(new Adoption(2, 2));
 
             while (state.Adoptions.Count(x => x.Value <= 0) < 6)
             {
@@ -122,7 +130,7 @@ namespace BrainRapidFusion.Multiplication
                 if (multiplicand >= 10 && !IsBasicMultiplicationTableAdopted())
                     break;
 
-                state.Adoptions.Add(new Adoption(multiplicand, multiplier, timeProvider));
+                state.Adoptions.Add(new Adoption(multiplicand, multiplier));
             }
         }
 
