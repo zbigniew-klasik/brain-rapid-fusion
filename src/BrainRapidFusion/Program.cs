@@ -23,6 +23,7 @@ namespace BrainRapidFusion
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddSingleton<ITimeProvider, TimeProvider>();
             builder.Services.AddSingleton<IRandomProvider, RandomProvider>();
+            builder.Services.AddTransient<IContextProvider, ContextProvider>();
             builder.Services.AddTransient<IStateService, StateService>();
             builder.Services.AddTransient<IGameService, GameService>();
 

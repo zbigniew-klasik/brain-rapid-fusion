@@ -9,6 +9,9 @@ namespace BrainRapidFusion.Multiplication.Components
     public class FinishBase : ComponentBase
     {
         [Inject]
+        public IContextProvider ContextProvider { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         public void StartAnotherGame()

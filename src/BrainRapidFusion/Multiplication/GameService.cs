@@ -1,5 +1,4 @@
 ﻿using BrainRapidFusion.Shared;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,15 +10,16 @@ namespace BrainRapidFusion.Multiplication
         private readonly IRandomProvider randomProvider;
         private readonly ITimeProvider timeProvider;
         private readonly IStateService stateService;
-
+        private readonly IContextProvider contextProvider;
         private State state = new State();
         private List<Adoption> usedAdoptions = new List<Adoption>();
 
-        public GameService(IRandomProvider randomProvider, ITimeProvider timeProvider, IStateService stateService)
+        public GameService(IRandomProvider randomProvider, ITimeProvider timeProvider, IStateService stateService, IContextProvider contextProvider)
         {
             this.randomProvider = randomProvider;
             this.timeProvider = timeProvider;
             this.stateService = stateService;
+            this.contextProvider = contextProvider;
         }
 
         public async Task StartGame()
@@ -140,18 +140,18 @@ namespace BrainRapidFusion.Multiplication
                 && state.Adoptions.Where(x => x.Multiplicand <= 10 && x.Multiplier <= 10).All(x => x.Value > 0);
         }
 
-        public int ProcessAnsweredQuestion(Question question)
+        public void ProcessAnsweredQuestion(Question question)
         {
             var adoption = state.Adoptions.GetForQuestion(question);
+            var context = contextProvider.Get();
 
             if (question.SelectedAnswer.IsCorrect)
             {
                 adoption.Increase(timeProvider);
-                return adoption.Multiplicand * adoption.Multiplier * adoption.Value;
+                context.AddPoints(adoption.Multiplicand * adoption.Multiplier * adoption.Value);
             }
 
             adoption.Clear(timeProvider);
-            return 0;
         }
     }
 }

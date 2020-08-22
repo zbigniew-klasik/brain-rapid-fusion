@@ -9,14 +9,15 @@ namespace BrainRapidFusion.Multiplication.Components
         private const int animationDuration = 300;
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        public IContextProvider ContextProvider { get; set; }
 
         [Inject]
         public IGameService GameService { get; set; }
 
-        public Question Question { get; private set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
-        public int Score { get; private set; }
+        public Question Question { get; private set; }
 
         public bool IsMuted { get; private set; }
 
@@ -37,7 +38,7 @@ namespace BrainRapidFusion.Multiplication.Components
                 ? animationDuration
                 : 5 * animationDuration;
 
-            Score += GameService.ProcessAnsweredQuestion(Question);
+            GameService.ProcessAnsweredQuestion(Question);
 
             this.StateHasChanged();
 

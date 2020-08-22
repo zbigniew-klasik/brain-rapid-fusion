@@ -6,7 +6,7 @@
     <div class="header control-bar">
         <BackButton />
         <div class="float-right">
-            <Score Value="@Score" />
+            <Score Value="@ContextProvider.Get().Score" />
             <Timer TimeoutInSeconds="180" OnTimeout="@FinishGame" />
         </div>
     </div>

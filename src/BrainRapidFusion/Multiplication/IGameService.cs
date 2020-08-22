@@ -8,6 +8,6 @@ namespace BrainRapidFusion.Multiplication
         Task CancelGame();
         Task FinishGame();
         Question GetNextQuestion();
-        int ProcessAnsweredQuestion(Question question);
+        void ProcessAnsweredQuestion(Question question);
     }
 }
