@@ -72,7 +72,7 @@ namespace BrainRapidFusion.Multiplication.Components
         public async Task FinishGame()
         {
             await GameService.FinishGame();
-            NavigationManager.NavigateTo("/multiplication/finish");
+            NavigationManager.NavigateTo("/multiplication/new-score");
         }
     }
 }

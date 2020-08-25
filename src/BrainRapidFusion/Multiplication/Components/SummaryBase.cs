@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace BrainRapidFusion.Multiplication.Components
 {
-    public class FinishBase : ComponentBase
+    public class SummaryBase : ComponentBase
     {
         [Inject]
         public IContextProvider ContextProvider { get; set; }
 
         [Inject]
+        public IScoreRepository ScoreRepository { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+        public IEnumerable<int> BestScores { get; private set; }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            BestScores = new List<int> { 123, 23, 45, 0, 0 }; // await ScoreRepository.GetBestScores();
+            base.OnParametersSet();
+        }
 
         public void StartAnotherGame()
         {

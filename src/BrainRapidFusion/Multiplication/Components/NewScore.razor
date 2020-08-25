@@ -1,0 +1,19 @@
+﻿@inherits NewScoreBase
+@page "/multiplication/new-score"
+
+<div class="multiplication">
+    <div class="page">
+
+        <h1>Well Done!</h1>
+
+        <h2>Your score: <strong>@ContextProvider.Get().Score</strong></h2>
+
+        <h3>@IsNewBestScore</h3>
+
+        <div class="footer">
+            <button class="btn" @onclick="Continue">
+                CONTINUE
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@inherits SummaryBase
+@page "/multiplication/summary"
+
+<div class="multiplication">
+    <div class="page">
+
+        <h2>Your best scores:</h2>
+
+        <ol>
+            @foreach (var score in BestScores)
+            {
+                <li>@score</li>
+            }
+        </ol>
+
+        <div class="footer">
+            <button class="btn" @onclick="StartAnotherGame">
+                START AGAIN
+            </button>
+        </div>
+    </div>
+
+
+</div>
