@@ -9,29 +9,30 @@ namespace BrainRapidFusion.Multiplication
     {
         private readonly IRandomProvider randomProvider;
         private readonly ITimeProvider timeProvider;
-        private readonly IStateService stateService;
         private readonly IContextProvider contextProvider;
+        private readonly IAdoptionRepository adoptionRepository;
         private readonly IScoreRepository scoreRepository;
-        private State state = new State();
+
+        private List<Adoption> allAdoptions = new List<Adoption>();
         private List<Adoption> usedAdoptions = new List<Adoption>();
 
         public GameService(
             IRandomProvider randomProvider,
             ITimeProvider timeProvider,
-            IStateService stateService,
             IContextProvider contextProvider,
+            IAdoptionRepository adoptionRepository,
             IScoreRepository scoreRepository)
         {
             this.randomProvider = randomProvider;
             this.timeProvider = timeProvider;
-            this.stateService = stateService;
             this.contextProvider = contextProvider;
+            this.adoptionRepository = adoptionRepository;
             this.scoreRepository = scoreRepository;
         }
 
         public async Task StartGame()
         {
-            state = await stateService.Get();
+            allAdoptions = (await adoptionRepository.Get()).ToList();
 
             contextProvider.Get().Reset();
 
@@ -41,12 +42,12 @@ namespace BrainRapidFusion.Multiplication
 
         public async Task CancelGame()
         {
-            await stateService.Set(state);
+            await adoptionRepository.Set(allAdoptions);
         }
 
         public async Task FinishGame()
         {
-            await stateService.Set(state);
+            await adoptionRepository.Set(allAdoptions);
             await scoreRepository.AddScore(contextProvider.Get().Score);
         }
 
@@ -76,7 +77,7 @@ namespace BrainRapidFusion.Multiplication
 
         private Question GetAdoptedQuestion()
         {
-            var adoptions = state.Adoptions
+            var adoptions = allAdoptions
                 .Where(x => !usedAdoptions.Contains(x))
                 .Where(x => x.Value >= 2)
                 .OrderBy(x => x.Value)
@@ -92,7 +93,7 @@ namespace BrainRapidFusion.Multiplication
 
         private Question GetFreshQuestion()
         {
-            var adoptions = state.Adoptions
+            var adoptions = allAdoptions
                 .Where(x => !usedAdoptions.Contains(x))
                 .Where(x => x.Value < 2)
                 .ToList();
@@ -107,7 +108,7 @@ namespace BrainRapidFusion.Multiplication
 
         private Question GetRrandomQuestion()
         {
-            var adoptions = state.Adoptions
+            var adoptions = allAdoptions
                 .ToList();
 
             var adoption = adoptions.Random(randomProvider);
@@ -117,14 +118,14 @@ namespace BrainRapidFusion.Multiplication
 
         private void RefillAddoptions()
         {
-            if (!state.Adoptions.Any())
-                state.Adoptions.Add(new Adoption(2, 2));
+            if (!allAdoptions.Any())
+                allAdoptions.Add(Adoption.CreateNew(2, 2, timeProvider));
 
-            while (state.Adoptions.Count(x => x.Value <= 0) < 6)
+            while (allAdoptions.Count(x => x.Value <= 0) < 6)
             {
-                var multiplicand = state.Adoptions.Max(x => x.Multiplicand);
+                var multiplicand = allAdoptions.Max(x => x.Multiplicand);
                 var multiplicandCopy = multiplicand;
-                var multipliers = state.Adoptions.Where(x => x.Multiplicand == multiplicandCopy).Select(x => x.Multiplier).ToList();
+                var multipliers = allAdoptions.Where(x => x.Multiplicand == multiplicandCopy).Select(x => x.Multiplier).ToList();
                 var multiplier = multipliers.Any() ? multipliers.Max(x => x) : 2;
 
                 if (multiplier == multiplicand)
@@ -140,25 +141,26 @@ namespace BrainRapidFusion.Multiplication
                 if (multiplicand >= 10 && !IsBasicMultiplicationTableAdopted())
                     break;
 
-                state.Adoptions.Add(new Adoption(multiplicand, multiplier));
+                allAdoptions.Add(Adoption.CreateNew(multiplicand, multiplier, timeProvider));
             }
         }
 
         private bool IsBasicMultiplicationTableAdopted()
         {
-            return state.Adoptions.Any(x => x.Multiplicand == 10 && x.Multiplier == 10)
-                && state.Adoptions.Where(x => x.Multiplicand <= 10 && x.Multiplier <= 10).All(x => x.Value > 0);
+            return allAdoptions.Any(x => x.Multiplicand == 10 && x.Multiplier == 10)
+                && allAdoptions.Where(x => x.Multiplicand <= 10 && x.Multiplier <= 10).All(x => x.Value > 0);
         }
 
         public void ProcessAnsweredQuestion(Question question)
         {
-            var adoption = state.Adoptions.GetForQuestion(question);
+            var adoption = allAdoptions.GetForQuestion(question);
             var context = contextProvider.Get();
 
             if (question.SelectedAnswer.IsCorrect)
             {
                 adoption.Increase(timeProvider);
                 context.AddPoints(adoption.Multiplicand * adoption.Multiplier * adoption.Value);
+                return;
             }
 
             adoption.Clear(timeProvider);

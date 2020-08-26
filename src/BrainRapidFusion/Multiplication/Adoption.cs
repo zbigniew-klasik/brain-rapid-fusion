@@ -5,7 +5,12 @@ namespace BrainRapidFusion.Multiplication
 {
     public class Adoption
     {
-        public Adoption(int multiplicand, int multiplier, int value = 0, DateTime lastChangedUtc = default)
+        public static Adoption CreateNew(int multiplicand, int multiplier, ITimeProvider timeProvider)
+        {
+            return new Adoption(multiplicand, multiplier, 0, timeProvider.UtcNow);
+        }
+
+        public Adoption(int multiplicand, int multiplier, int value, DateTime lastChangedUtc)
         {
             Multiplicand = multiplicand;
             Multiplier = multiplier;
@@ -14,7 +19,7 @@ namespace BrainRapidFusion.Multiplication
         }
 
         public int Multiplicand { get; }
-        public int Multiplier { get; }
+        public int Multiplier { get;}
         public int Value { get; private set; }
         public DateTime LastChangedUtc { get; private set; }
 

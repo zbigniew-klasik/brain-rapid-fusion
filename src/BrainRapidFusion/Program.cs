@@ -24,8 +24,8 @@ namespace BrainRapidFusion
             builder.Services.AddSingleton<ITimeProvider, TimeProvider>();
             builder.Services.AddSingleton<IRandomProvider, RandomProvider>();
             builder.Services.AddTransient<IContextProvider, ContextProvider>();
+            builder.Services.AddTransient<IAdoptionRepository, AdoptionRepository>();
             builder.Services.AddTransient<IScoreRepository, ScoreRepository>();
-            builder.Services.AddTransient<IStateService, StateService>();
             builder.Services.AddTransient<IGameService, GameService>();
 
             await builder.Build().RunAsync();
