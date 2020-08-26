@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BrainRapidFusion.Shared;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace BrainRapidFusion.Multiplication.Components
         public NavigationManager NavigationManager { get; set; }
 
         public IEnumerable<int> BestScores { get; private set; }
+
+        public CssClass PulpitCssClass { get; set; } = new CssClass("pulpit");
 
         protected override async Task OnParametersSetAsync()
         {

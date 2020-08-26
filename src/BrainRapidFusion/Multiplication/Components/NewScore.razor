@@ -2,18 +2,19 @@
 @page "/multiplication/new-score"
 
 <div class="multiplication">
-    <div class="page">
+    <div class="@PulpitCssClass center-content">
+        <div class="page">
 
-        <h1>Well Done!</h1>
+            <h1>well done!</h1>
 
-        <h2>Your score: <strong>@ContextProvider.Get().Score</strong></h2>
+            <p>@ContextProvider.Get().Score points</p>
 
-        <h3>@IsNewBestScore</h3>
+            <p>@IsNewBestScore</p>
 
-        <div class="footer">
-            <button class="btn" @onclick="Continue">
+            <div class="text-button" @onclick="Continue">
                 CONTINUE
-            </button>
+            </div>
+
         </div>
     </div>
 </div>
