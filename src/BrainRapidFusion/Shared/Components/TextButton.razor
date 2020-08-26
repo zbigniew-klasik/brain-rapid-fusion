@@ -1,0 +1,17 @@
+﻿<div class="text-button" @onclick="OnButtonClicked">
+    @Text
+</div>
+
+@code {
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public EventCallback OnClicked { get; set; }
+
+    private void OnButtonClicked()
+    {
+        _ = OnClicked.InvokeAsync(this);
+    }
+}
