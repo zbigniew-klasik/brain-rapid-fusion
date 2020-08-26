@@ -142,6 +142,11 @@ $animation-duration: 300ms;
         }
     }
 
+    .medal {
+        margin-top: 10vmin;
+        height: 30vmin;
+    }
+
     .show {
         opacity: 0.0;
         animation: multiplication-pulpit-show $animation-duration ease both;

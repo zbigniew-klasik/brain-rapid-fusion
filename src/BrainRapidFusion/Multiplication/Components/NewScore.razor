@@ -9,10 +9,15 @@
 
             <p>@ContextProvider.Get().Score points</p>
 
-            <p>@IsNewBestScore</p>
+            @if (IsNewBestScore)
+            {
+                <p>
+                    <img src="/pictures/medal.png" class="medal" />
+                </p>
+            }
 
             <TextButton Text="CONTINUE"
-                        OnClicked="Continue"/>
+                        OnClicked="Continue" />
 
         </div>
     </div>

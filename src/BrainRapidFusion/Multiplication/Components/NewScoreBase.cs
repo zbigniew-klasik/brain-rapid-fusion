@@ -27,8 +27,9 @@ namespace BrainRapidFusion.Multiplication.Components
             IsNewBestScore = await ScoreRepository.IsNewBestScore(ContextProvider.Get().Score);
             base.OnParametersSet();
         }
-        public void Continue()
+        public async Task Continue()
         {
+            await ScoreRepository.AddScore(ContextProvider.Get().Score);
             NavigationManager.NavigateTo("multiplication/summary");
         }
     }

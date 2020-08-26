@@ -48,7 +48,6 @@ namespace BrainRapidFusion.Multiplication
         public async Task FinishGame()
         {
             await adoptionRepository.Set(allAdoptions);
-            await scoreRepository.AddScore(contextProvider.Get().Score);
         }
 
         public Question GetNextQuestion()
