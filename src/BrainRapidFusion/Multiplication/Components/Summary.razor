@@ -14,12 +14,21 @@
             <ol>
                 @foreach (var score in BestScores)
                 {
-                    <li>@score</li>
+                    <li>
+                        @if(score > 0)
+                        {
+                            <span>@score</span> 
+                        }
+                        else
+                        {
+                            <span>&mdash;</span>
+                        }
+                    </li>
                 }
             </ol>
 
             <TextButton Text="START AGAIN"
-                        OnClicked="StartAnotherGame"/>
+                        OnClicked="StartAnotherGame" />
 
         </div>
     </div>
