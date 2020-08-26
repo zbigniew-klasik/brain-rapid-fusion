@@ -18,14 +18,20 @@ namespace BrainRapidFusion.Multiplication.Components
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        public IEnumerable<int> BestScores { get; private set; }
+        public IEnumerable<int> BestScores { get; private set; } = new List<int> { 0, 0, 0, 0, 0 };
 
         public CssClass PulpitCssClass { get; set; } = new CssClass("pulpit");
 
-        protected override async Task OnParametersSetAsync()
+        protected override void OnParametersSet()
         {
-            BestScores = new List<int> { 123, 23, 45, 0, 0 }; // await ScoreRepository.GetBestScores();
+            _ = LoadScores();
             base.OnParametersSet();
+        }
+
+        private async Task LoadScores()
+        {
+            BestScores = await ScoreRepository.GetBestScores();
+            this.StateHasChanged();
         }
 
         public void StartAnotherGame()

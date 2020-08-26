@@ -11,20 +11,29 @@ namespace BrainRapidFusion.Multiplication
         private readonly ITimeProvider timeProvider;
         private readonly IStateService stateService;
         private readonly IContextProvider contextProvider;
+        private readonly IScoreRepository scoreRepository;
         private State state = new State();
         private List<Adoption> usedAdoptions = new List<Adoption>();
 
-        public GameService(IRandomProvider randomProvider, ITimeProvider timeProvider, IStateService stateService, IContextProvider contextProvider)
+        public GameService(
+            IRandomProvider randomProvider,
+            ITimeProvider timeProvider,
+            IStateService stateService,
+            IContextProvider contextProvider,
+            IScoreRepository scoreRepository)
         {
             this.randomProvider = randomProvider;
             this.timeProvider = timeProvider;
             this.stateService = stateService;
             this.contextProvider = contextProvider;
+            this.scoreRepository = scoreRepository;
         }
 
         public async Task StartGame()
         {
             state = await stateService.Get();
+
+            contextProvider.Get().Reset();
 
             usedAdoptions.Clear();
             RefillAddoptions();
@@ -38,6 +47,7 @@ namespace BrainRapidFusion.Multiplication
         public async Task FinishGame()
         {
             await stateService.Set(state);
+            await scoreRepository.AddScore(contextProvider.Get().Score);
         }
 
         public Question GetNextQuestion()

@@ -26,9 +26,9 @@ namespace BrainRapidFusion.Multiplication
         {
             var bestScores = (await GetBestScores()).ToList();
             bestScores.Add(score);
-            bestScores = bestScores.OrderByDescending(s => s).ToList();
+            bestScores = bestScores.OrderByDescending(s => s).Take(5).ToList();
             var json = JsonConvert.SerializeObject(bestScores);
-            await localStorageService.SetItemAsync(json, bestScores);
+            await localStorageService.SetItemAsync(storageKey, json);
         }
 
         public async Task<IReadOnlyList<int>> GetBestScores()
